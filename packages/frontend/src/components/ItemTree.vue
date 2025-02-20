@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useItemTree } from '@/composables/useItemTree';
 
 interface Item {
   id: string;
@@ -17,54 +17,27 @@ const emit = defineEmits<{
   (e: 'selectItem', item: Item): void;
 }>();
 
-const expandedFolders = ref<Set<string>>(new Set());
-
-const toggleFolder = (item: Item) => {
-  if (item.type === 'folder') {
-    expandedFolders.value.has(item.id)
-      ? expandedFolders.value.delete(item.id)
-      : expandedFolders.value.add(item.id);
-  }
-};
-
-const handleClick = (item: Item) => {
-  emit('selectItem', item);
-  toggleFolder(item);
-};
+const { expandedFolders, handleClick } = useItemTree(emit);
 </script>
 
 <template>
   <div class="item-tree">
     <div v-for="item in items" :key="item.id" class="item">
-      <div 
-        class="item-header"
-        :class="{ 'selected-item': item.id === selectedItemId }" 
-        @click="handleClick(item)"
-      >
+      <div class="item-header" :class="{ 'selected-item': item.id === selectedItemId }" @click="handleClick(item)">
         <span class="item-icon">
-          <i :class="[
-            'pi',
-            item.type === 'folder' 
-              ? expandedFolders.has(item.id) 
-                ? 'pi-folder-open' 
-                : 'pi-folder'
-              : 'pi-file'
+          <i :class="['pi', item.type === 'folder'
+            ? expandedFolders.has(item.id)
+              ? 'pi-folder-open'
+              : 'pi-folder'
+            : 'pi-file'
           ]"></i>
         </span>
         <span class="item-name">{{ item.name }}</span>
       </div>
 
-      <!-- Show children (both folders and files) inside expanded folders -->
       <transition name="fade">
-        <div 
-          v-if="expandedFolders.has(item.id) && item.children?.length" 
-          class="item-children"
-        >
-          <ItemTree 
-            :items="item.children" 
-            :selectedItemId="selectedItemId"
-            @selectItem="emit('selectItem', $event)"
-          />
+        <div v-if="expandedFolders.has(item.id) && item.children?.length" class="item-children">
+          <ItemTree :items="item.children" :selectedItemId="selectedItemId" @selectItem="emit('selectItem', $event)" />
         </div>
       </transition>
     </div>
@@ -106,10 +79,13 @@ const handleClick = (item: Item) => {
   }
 
   /* Smooth transition effect */
-  .fade-enter-active, .fade-leave-active {
+  .fade-enter-active,
+  .fade-leave-active {
     transition: opacity 0.3s ease;
   }
-  .fade-enter-from, .fade-leave-to {
+
+  .fade-enter-from,
+  .fade-leave-to {
     opacity: 0;
   }
 }

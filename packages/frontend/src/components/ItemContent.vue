@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch  } from 'vue';
+import { watch } from 'vue';
+import { useFileEditor } from '@/composables/useFileEditor';
 
 interface Item {
   id: string;
@@ -11,38 +12,23 @@ interface Item {
 const props = defineProps<{
   items: Item[];
   selectedItem: Item | null;
-  fileContent?: string | null;
+  fileContent: string | null
 }>();
 
 const emit = defineEmits<{
   (e: 'openFolder', folder: Item): void;
   (e: 'openFile', file: Item): void;
-  (e: 'updateFileContent', content: string): void; // ✅ Emit event for updates
+  (e: 'updateFileContent', content: string): void;
 }>();
 
-const editableContent = ref(props.fileContent || '');
-const isEditing = ref(false);
+const { editableContent, isEditing, trackChanges, saveFileContent, updateContent } = useFileEditor(props.fileContent, emit);
 
 watch(() => props.fileContent, (newContent) => {
-  editableContent.value = newContent || '';
-  isEditing.value = false;
+  updateContent(newContent);
 });
 
 const handleClick = (item: Item) => {
-  if (item.type === 'folder') {
-    emit('openFolder', item);
-  } else {
-    emit('openFile', item);
-  }
-};
-
-const trackChanges = () => {
-  isEditing.value = true;
-};
-
-const saveFileContent = () => {
-  emit("updateFileContent", editableContent.value);
-  isEditing.value = false; // Reset editing state after saving
+  item.type === 'folder' ? emit('openFolder', item) : emit('openFile', item);
 };
 </script>
 
@@ -175,17 +161,6 @@ const saveFileContent = () => {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-  }
-
-  .file-textarea {
-    width: 100%;
-    height: 300px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 1rem;
-    font-family: monospace;
-    resize: vertical;
-    outline: none;
   }
 
   .save-button {
