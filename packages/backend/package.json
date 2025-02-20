@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist",
-    "start": "bun run src/index.ts"
+    "dev": "bun --watch src/index.ts --env .env",
+    "build": "bun build src/index.ts --env .env --outdir dist",
+    "start": "bun run src/index.ts --env .env"
   },
   "dependencies": {
     "@elysiajs/cors": "^0.8.0",

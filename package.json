@@ -17,5 +17,8 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
   }
 }
