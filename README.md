@@ -95,16 +95,18 @@ Ensure you have the following installed:
 
 ### **2️⃣ Environment Variables**  
 
-Create a `.env` file in the root directory:  
+Create a `.env` file in the root directory or copy from `.env.example`:  
 
 ```ini
 # Database Config
-DB_HOST=db
+DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=postgres
 DB_NAME=web_explorer
 ```
+
+You can also update `.env.docker` according to your needs!
 
 ---
 
