@@ -1,0 +1,32 @@
+# Use Bun official image
+FROM oven/bun:latest AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy monorepo package.json and lock file
+COPY package.json bun.lock* ./
+COPY packages/backend/package.json packages/backend/
+
+# Install dependencies
+RUN bun install
+
+# Copy backend code
+COPY packages/backend/. packages/backend/
+
+# Build backend
+RUN cd packages/backend && bun run build
+
+# Production image
+FROM oven/bun:latest AS runner
+WORKDIR /app
+
+# Copy built files
+COPY --from=builder /app/packages/backend/dist /app/dist
+COPY --from=builder /app/packages/backend/package.json /app/package.json
+
+# Expose port
+EXPOSE 3000
+
+# Start backend
+CMD ["bun", "run", "dist/index.js"]

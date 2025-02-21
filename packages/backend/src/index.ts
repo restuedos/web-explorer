@@ -1,12 +1,14 @@
+import path from "path";
+import dotenv from 'dotenv';
+
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+
 import 'reflect-metadata';
 import { Elysia, ValidationError } from 'elysia';
 import { cors } from '@elysiajs/cors';
-import dotenv from 'dotenv';
 import { AppDataSource } from '@/config/database';
 import { errorMiddleware } from '@/middlewares/error.middleware';
 import { setupRoutes } from '@/routes';
-
-dotenv.config();
 
 const app = new Elysia()
   .use(cors({

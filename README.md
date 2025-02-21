@@ -1,196 +1,184 @@
-# Windows Explorer-like Application
+# **Windows Explorer-like Application**  
 
-This is a Windows Explorer-like application built with a monorepo architecture, leveraging **Typescript**, **ElysiaJS**, **Vue 3**, and **Bun**. The project is structured into two main packages: `backend` and `frontend`, each serving its respective purpose.
+A **Windows Explorer-like** file management app built with a **monorepo** structure using:  
+- **Backend**: ElysiaJS (Bun) + PostgreSQL + TypeORM  
+- **Frontend**: Vue 3 + Vite + PrimeVue  
+
+This project provides an **efficient, modern, and fast file-exploring experience**.
 
 ---
 
-## Project Structure
+## 📂 **Project Structure**  
 
 ```
 .
-├── bun.lock
+├── .env.example
+├── .env.docker
+├── .gitignore
+├── .dockerignore
+├── docker-compose.yml
+├── Dockerfile.backend
+├── Dockerfile.frontend
 ├── package.json
-├── package-lock.json
-├── packages
-│   ├── backend
+├── README.md
+├── packages/
+│   ├── backend/
 │   │   ├── package.json
-│   │   ├── src
-│   │   │   ├── entities
-│   │   │   │   └── Item.ts
-│   │   │   └── index.ts
-│   │   └── tsconfig.json
-│   └── frontend
-│       ├── index.html
-│       ├── package.json
-│       ├── public
-│       │   └── vite.svg
-│       ├── src
-│       │   ├── App.vue
-│       │   ├── components
-│       │   │   ├── ItemContent.vue
-│       │   │   └── ItemTree.vue
-│       │   ├── main.ts
-│       │   └── style.css
-│       ├── tsconfig.app.json
-│       ├── tsconfig.json
-│       ├── tsconfig.node.json
-│       └── vite.config.ts
-└── README.md
+│   │   ├── tsconfig.json
+│   │   ├── src/
+│   │   │   ├── config/
+│   │   │   │   ├── database.ts
+│   │   │   ├── controllers/
+│   │   │   │   ├── item.controller.ts
+│   │   │   ├── entities/
+│   │   │   │   ├── Item.ts
+│   │   │   ├── middlewares/
+│   │   │   │   ├── error.middleware.ts
+│   │   │   ├── repositories/
+│   │   │   │   ├── item.repository.ts
+│   │   │   ├── services/
+│   │   │   │   ├── item.service.ts
+│   │   │   ├── routes.ts
+│   │   │   ├── index.ts
+│   ├── frontend/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── tsconfig.app.json
+│   │   ├── tsconfig.node.json
+│   │   ├── vite.config.ts
+│   │   ├── index.html
+│   │   ├── public/
+│   │   │   ├── vite.svg
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── ItemContent.vue
+│   │   │   │   ├── ItemTree.vue
+│   │   │   ├── composables/
+│   │   │   │   ├── useExplorer.ts
+│   │   │   │   ├── useFileEditor.ts
+│   │   │   │   ├── useItemTree.ts
+│   │   │   │   ├── useSearch.ts
+│   │   │   ├── App.vue
+│   │   │   ├── main.ts
+│   │   │   ├── style.css
+│   │   │   ├── vue-shim.d.ts
 ```
 
 ---
 
-## Features
+## 🚀 **Features**  
 
-### Backend
-- Built with **ElysiaJS**, a fast and expressive backend framework.
-- Uses **Bun** as the runtime for its speed and modern tooling.
-- Integrates with **PostgreSQL** via `pg` and **TypeORM** for database management.
-- Defines entities (e.g., `Item.ts`) to model data structures.
-- Serves as the API layer for the frontend.
+### **Backend (ElysiaJS + Bun)**  
+✅ **ElysiaJS** - High-performance web framework  
+✅ **PostgreSQL + TypeORM** - Database & ORM integration  
+✅ **Dockerized** - Runs easily with Docker  
+✅ **Modular structure** - Organized controllers, repositories, and services  
 
-### Frontend
-- Built with **Vue 3** for a reactive and component-based UI.
-- Uses **Vite** for fast development and bundling.
-- Includes reusable components like `ItemTree.vue` (for displaying a tree structure) and `ItemContent.vue` (for displaying item details).
-- Styled with **PrimeVue** and **PrimeIcons** for a polished and responsive design.
-- Uses **Axios** for API communication with the backend.
+### **Frontend (Vue 3 + Vite)**  
+✅ **Vue 3 + Composition API** - Reactive UI  
+✅ **PrimeVue + PrimeIcons** - Beautiful components  
+✅ **Vite** - Super-fast development  
+✅ **Axios** - API communication  
 
 ---
 
-## Prerequisites
+## 🔧 **Setup & Installation**  
 
-Before running the project, ensure you have the following installed:
+### **1️⃣ Prerequisites**  
 
-- [Bun](https://bun.sh) (v1.0 or later)
-- [Node.js](https://nodejs.org) (v18 or later)
-- [PostgreSQL](https://www.postgresql.org) (for the backend database)
+Ensure you have the following installed:  
+- **[Bun](https://bun.sh/)**  
+- **[Docker & Docker Compose](https://www.docker.com/)**  
+- **[PostgreSQL](https://www.postgresql.org/)** (for local development)  
 
 ---
 
-## Installation
+### **2️⃣ Environment Variables**  
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/windows-explorer-app.git
-   cd windows-explorer-app
+Create a `.env` file in the root directory:  
+
+```ini
+# Database Config
+DB_HOST=db
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=web_explorer
+```
+
+---
+
+### **3️⃣ Running the Application**  
+
+#### **🔹 Running with Docker**  
+
+1. **Start everything with Docker**  
+   ```sh
+   docker-compose up --build
    ```
 
-2. Install dependencies for the project:
-   ```bash
+2. Open in browser:  
+   - **Frontend** → `http://localhost:8080`  
+   - **Backend** → `http://localhost:3000`  
+
+---
+
+#### **🔹 Running Locally (Without Docker)**  
+
+1. **Install dependencies**  
+   ```sh
    bun install
    ```
 
-3. Set up the PostgreSQL database and update the connection details in the backend configuration.
+2. **Start both backend & frontend**  
+   ```sh
+   bun run dev
+   ```
+
+4. Open `http://localhost:5173` (Vite default port).  
 
 ---
 
-## Running the Application
+## 🛠 **Development Commands**  
 
-The root `package.json` includes scripts to simplify development and building:
-
-### Development
-To start both the frontend and backend in development mode, run:
-```bash
-bun run dev
-```
-This uses `concurrently` to run the frontend and backend simultaneously.
-
-- Frontend will be available at `http://localhost:5173`.
-- Backend will be available at `http://localhost:3000`.
-
-### Build
-To build both the frontend and backend for production, run:
-```bash
-bun run build
-```
+| Command                  | Description                                  |
+|--------------------------|----------------------------------------------|
+| `bun run dev`           | Start both backend & frontend (local)       |
+| `bun run dev:backend`   | Start only backend                          |
+| `bun run dev:frontend`  | Start only frontend                         |
+| `bun run start`         | Start both backend & frontend (production)  |
+| `bun run start:backend` | Start only backend in production            |
+| `bun run start:frontend`| Start only frontend in production           |
+| `bun run build`         | Build both backend & frontend for production |
+| `bun run build:backend` | Build backend only                          |
+| `bun run build:frontend`| Build frontend only                         |
 
 ---
 
-## Backend Details
+## 📜 **API Endpoints**  
 
-### Scripts
-| Script      | Description                                      |
-|-------------|--------------------------------------------------|
-| `dev`       | Starts the backend in development mode.          |
-| `build`     | Builds the backend for production.               |
-| `start`     | Runs the backend from the compiled output.       |
+All API endpoints are under the `/api/v1` group.
 
-### Dependencies
-- **ElysiaJS**: Backend framework for building APIs.
-- **PostgreSQL**: Database driver (`pg`).
-- **TypeORM**: Object-Relational Mapping (ORM) for database management.
-- **Reflect-metadata**: Required for TypeORM decorators.
-
----
-
-## Frontend Details
-
-### Scripts
-| Script      | Description                                      |
-|-------------|--------------------------------------------------|
-| `dev`       | Starts the frontend in development mode.         |
-| `build`     | Builds the frontend for production.              |
-| `preview`   | Serves the production build locally for testing. |
-
-### Dependencies
-- **Vue 3**: Frontend framework for building UIs.
-- **PrimeVue**: UI component library.
-- **PrimeIcons**: Icon library for PrimeVue.
-- **Axios**: HTTP client for API communication.
-- **Vite**: Build tool for fast development.
+| Method | Endpoint                     | Description               |
+|--------|------------------------------|---------------------------|
+| GET    | `/api/v1/items`              | Get all items            |
+| GET    | `/api/v1/items/:id/children` | Get item children        |
+| GET    | `/api/v1/items/:id/content`  | Get file content         |
+| GET    | `/api/v1/items/search?q=`    | Search items             |
+| POST   | `/api/v1/items`              | Create a new item        |
+| PUT    | `/api/v1/items/:id/content`  | Update file content      |
+| PATCH  | `/api/v1/items/:id`          | Rename an item           |
+| DELETE | `/api/v1/items/:id`          | Delete an item           |
 
 ---
 
-## Development Scripts (Root)
+## 🤝 **Contributing**  
 
-The following scripts are available in the root `package.json`:
-
-| Script            | Description                                                                 |
-|--------------------|-----------------------------------------------------------------------------|
-| `dev`             | Starts both the frontend and backend in development mode concurrently.      |
-| `dev:frontend`    | Starts only the frontend in development mode.                               |
-| `dev:backend`     | Starts only the backend in development mode.                                |
-| `build`           | Builds both the frontend and backend for production.                        |
-| `build:frontend`  | Builds only the frontend for production.                                    |
-| `build:backend`   | Builds only the backend for production.                                     |
+Feel free to fork this repo and submit pull requests! 🚀  
 
 ---
 
-## Technologies Used
+## ⚖️ **License**  
 
-- **Bun**: Fast runtime and package manager.
-- **Typescript**: Type-safe development.
-- **ElysiaJS**: Backend framework for building APIs.
-- **Vue 3**: Frontend framework for building UIs.
-- **Vite**: Frontend build tool for fast development.
-- **PrimeVue**: UI component library.
-- **TypeORM**: ORM for database management.
-- **PostgreSQL**: Relational database.
-- **Concurrently**: Run multiple commands concurrently.
+MIT License © 2025 Web Explorer  
 
----
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request with a detailed description of your changes.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## Acknowledgments
-
-- Thanks to the **Bun**, **Vue**, and **ElysiaJS** communities for their amazing tools and support.
-- Inspired by the simplicity and functionality of Windows Explorer.
-
----
-
-Enjoy exploring! 🚀

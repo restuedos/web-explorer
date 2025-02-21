@@ -4,19 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/index.ts --env .env",
-    "build": "bun build src/index.ts --env .env --outdir dist",
-    "start": "bun run src/index.ts --env .env"
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "start": "bun run dist/index.js"
   },
   "dependencies": {
     "@elysiajs/cors": "^0.8.0",
     "elysia": "^0.8.17",
     "pg": "^8.11.3",
     "typeorm": "^0.3.20",
-    "reflect-metadata": "^0.2.1"
+    "reflect-metadata": "^0.2.1",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
-    "@types/node": "^20.11.20",
+    "@types/node": "^22.13.4",
     "tsx": "^4.7.1",
     "typescript": "^5.5.3"
   }

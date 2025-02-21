@@ -7,6 +7,9 @@
     "dev": "concurrently \"bun run dev:frontend\" \"bun run dev:backend\"",
     "dev:frontend": "cd packages/frontend && bun run dev",
     "dev:backend": "cd packages/backend && bun run dev",
+    "start": "concurrently \"bun run start:frontend\" \"bun run start:backend\"",
+    "start:frontend": "cd packages/frontend && bun run start",
+    "start:backend": "cd packages/backend && bun run start",
     "build": "bun run build:frontend && bun run build:backend",
     "build:frontend": "cd packages/frontend && bun run build",
     "build:backend": "cd packages/backend && bun run build"
@@ -15,6 +18,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@types/node": "^22.13.4",
     "concurrently": "^9.1.2",
     "typescript": "^5.5.3"
   },

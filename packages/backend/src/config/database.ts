@@ -3,6 +3,10 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { Item } from '@/entities/Item';
 
+if (!process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
+  throw new Error('❌ Missing required database environment variables');
+}
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,

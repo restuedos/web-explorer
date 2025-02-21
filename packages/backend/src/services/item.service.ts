@@ -29,18 +29,46 @@ export class ItemService {
 
     // Sort function to prioritize folders over files
     const sortItems = (items: Item[]): void => {
-      items.sort((a, b) =>
-        a.type === b.type ? a.name.localeCompare(b.name) : a.type === 'folder' ? -1 : 1
-      );
+      items.sort((a, b) => {
+        // Sort folders before files
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+    
+        // Sort by name length
+        if (a.name.length !== b.name.length) return a.name.length - b.name.length;
+    
+        // Sort alphabetically
+        return a.name.localeCompare(b.name);
+      });
+    
+      // Recursively sort children
       items.forEach((item) => sortItems(item.children || []));
     };
-
+    
     sortItems(rootItems);
     return rootItems;
   }
 
   async getChildren(id: string) {
-    return this.itemRepository.getChildren(id);
+    const items = await this.itemRepository.getChildren(id);
+
+    const sortItems = (items: Item[]): void => {
+      items.sort((a, b) => {
+        // Sort folders before files
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+    
+        // Sort by name length
+        if (a.name.length !== b.name.length) return a.name.length - b.name.length;
+    
+        // Sort alphabetically
+        return a.name.localeCompare(b.name);
+      });
+    
+      // Recursively sort children
+      items.forEach((item) => sortItems(item.children || []));
+    };    
+
+    sortItems(items);
+    return items;
   }
 
   async getFileContent(id: string) {

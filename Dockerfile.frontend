@@ -1,0 +1,30 @@
+# Use Bun official image for building
+FROM oven/bun:latest AS builder
+
+WORKDIR /app
+
+# Copy monorepo package.json and lock file
+COPY package.json bun.lock* ./
+COPY packages/frontend/package.json packages/frontend/
+
+# Install dependencies
+RUN bun install
+
+# Copy frontend code
+COPY packages/frontend/. packages/frontend/
+
+# Build frontend
+RUN cd packages/frontend && bun run build
+
+# Production image
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+
+# Copy built files
+COPY --from=builder /app/packages/frontend/dist /usr/share/nginx/html
+
+# Expose port
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
