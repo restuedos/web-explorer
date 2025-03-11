@@ -10,10 +10,11 @@
     "start": "bun x serve -s dist -l 4173"
   },
   "dependencies": {
-    "vue": "^3.4.38",
     "axios": "^1.6.7",
+    "primeicons": "^6.0.1",
     "primevue": "^3.49.1",
-    "primeicons": "^6.0.1"
+    "vue": "^3.4.38",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.4",

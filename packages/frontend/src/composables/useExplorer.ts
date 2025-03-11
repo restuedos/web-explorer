@@ -81,7 +81,7 @@ export function useExplorer() {
       await axios.post('http://localhost:3000/api/v1/items', {
         name: itemName,
         type,
-        parentId: selectedItem.value?.id || null
+        parentId: selectedItem.value?.id
       });
       await fetchItems();
       if (selectedItem.value?.type === 'folder') {
