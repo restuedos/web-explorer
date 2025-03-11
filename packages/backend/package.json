@@ -9,16 +9,17 @@
     "start": "bun run dist/index.js"
   },
   "dependencies": {
-    "@elysiajs/cors": "^0.8.0",
-    "elysia": "^0.8.17",
-    "pg": "^8.11.3",
-    "typeorm": "^0.3.20",
-    "reflect-metadata": "^0.2.1",
-    "dotenv": "^16.4.7"
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.2",
+    "dotenv": "^16.4.7",
+    "elysia": "^1.2.25",
+    "pg": "^8.13.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.21"
   },
   "devDependencies": {
-    "@types/node": "^22.13.4",
-    "tsx": "^4.7.1",
-    "typescript": "^5.5.3"
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
   }
 }
